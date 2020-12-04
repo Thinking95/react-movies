@@ -53,7 +53,8 @@ jobs:
             - app-
       - run:
           name: Run prettier check
-          command: npm run prettier:check
+          command: yarn add -D prettier
+                   npm run prettier:check
 
   deploy-to-aws-s3:
     docker:
