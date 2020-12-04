@@ -37,7 +37,7 @@ jobs:
       - run:
           name: Run linting
           command: npm i -D eslint eslint-config-standard eslint-plugin-import eslint-plugin-node eslint-plugin-promise eslint-plugin-standard
-                    npm run lint
+                   npm run lint
   prettier:
     docker:
       - image: circleci/node:15.3.0
@@ -53,8 +53,7 @@ jobs:
             - app-
       - run:
           name: Run prettier check
-          command: npm i -D prettier
-                   npm run prettier:check
+          command: npm run prettier:check
 
   deploy-to-aws-s3:
     docker:
