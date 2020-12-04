@@ -22,7 +22,6 @@ jobs:
             - node_modules
           key: app-{{ checksum "package.json "}}
 
-  
   deploy-to-aws-s3:
     docker:
       - image: circleci/node:15.3.0
