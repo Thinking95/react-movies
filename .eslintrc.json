@@ -11,8 +11,7 @@
     ],
     "globals": {
         "Atomics": "readonly",
-		"SharedArrayBuffer": "readonly"
-
+		    "SharedArrayBuffer": "readonly"
     },
     "parser": "babel-eslint",
     "parserOptions": {
@@ -22,7 +21,6 @@
         "ecmaFeatures": {
             "jsx": true
         }
-
     },
     "settings": {
       "react": {
@@ -33,7 +31,8 @@
         "react"
     ],
     "rules": {
-		"semi": [2, "always"],
+    "semi": [2, "always"],
+    "indent": "off",
     "no-tabs": 0,
     "quotes": [2, "single", { "avoidEscape": true }],
         "space-before-function-paren": [0, {"anonymous": "always", "named": "always"}],
