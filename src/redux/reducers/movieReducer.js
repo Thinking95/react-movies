@@ -1,8 +1,9 @@
-const initialState = {list: [] };
+const initialState = { list: [] };
 
-export default (state = initialState, action)=>{
-    switch(action.type){
+export default (state = initialState, action) => {
+    switch (action.type){
         default:
             return state;
-    }
+	}
+	/* eslint-disable eol-last */
 };
