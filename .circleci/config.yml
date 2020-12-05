@@ -39,7 +39,6 @@ jobs:
           name: Run linting
           command: npm i -D eslint eslint-config-standard eslint-plugin-import eslint-plugin-node eslint-plugin-promise eslint-plugin-standard
                    npm run lint
- 
   deploy-to-aws-s3:
     docker:
       - image: circleci/node:15.3.0
