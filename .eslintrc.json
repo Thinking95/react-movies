@@ -35,8 +35,10 @@
     "rules": {
 		"semi": [2, "always"],
     "no-tabs": 0,
+    "indent": "off",
     "quotes": [2, "single", { "avoidEscape": true }],
         "space-before-function-paren": [0, {"anonymous": "always", "named": "always"}],
+        "space-before-blocks" : 2,
         "camelcase": 0,
         "no-return-assign": 0
     }
