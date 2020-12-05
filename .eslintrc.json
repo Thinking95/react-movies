@@ -3,7 +3,6 @@
     "env": {
         "browser": true,
         "es6": true,
-		    "jest": true
     },
     "extends": [
         "plugin:react/recommended",
@@ -11,8 +10,7 @@
     ],
     "globals": {
         "Atomics": "readonly",
-		"SharedArrayBuffer": "readonly"
-
+		    "SharedArrayBuffer": "readonly"
     },
     "parser": "babel-eslint",
     "parserOptions": {
@@ -22,7 +20,6 @@
         "ecmaFeatures": {
             "jsx": true
         }
-
     },
     "settings": {
       "react": {

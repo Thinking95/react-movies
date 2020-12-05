@@ -5,4 +5,5 @@ export default (state = initialState, action) => {
         default:
             return state;
     }
+    /* eslint-disable eol-last */
 };
