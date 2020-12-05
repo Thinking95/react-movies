@@ -22,6 +22,24 @@ jobs:
             - node_modules
           key: app-{{ checksum "package.json "}}
 
+  linting:
+    docker:
+      - image: circleci/node:15.3.0
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Show current branch
+          command: echo ${CHECK_BRANCH}
+      - restore_cache:
+          keys:
+            - app-{{ checksum "package.json "}}
+            - app-
+      - run:
+          name: Run linting
+          command: npm i -D eslint eslint-config-standard eslint-plugin-import eslint-plugin-node eslint-plugin-promise eslint-plugin-standard
+                   npm run lint
+
   deploy-to-aws-s3:
     docker:
       - image: circleci/node:15.3.0
@@ -58,7 +76,6 @@ jobs:
             else
                aws --region ${AWS_REGION} s3 sync ~/repo/build s3://${AWS_DEV_BUCKET} --delete
             fi
-            
 
   deploy-to-aws-cloudfront:
     docker:
@@ -102,14 +119,23 @@ workflows:
   build_and_deploy:
     jobs:
       - build
-      - deploy-to-aws-s3:
+      - linting:
           requires:
             - build
           filters:
             branches:
               only:
                 - develop
-                - staging 
+                - staging
+                - master
+      - deploy-to-aws-s3:
+          requires:
+            - linting
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
                 - master
       - deploy-to-aws-cloudfront:
           requires:
@@ -118,5 +144,5 @@ workflows:
             branches:
               only:
                 - develop
-                - staging 
+                - staging
                 - master
