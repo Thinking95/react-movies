@@ -31,13 +31,11 @@ const Slideshow = (prop) => {
     let lastIndex = 0;
     lastIndex = currentSlideIndex + 1;
     currentSlideIndex = lastIndex >= images.length ? 0 : lastIndex;
-    setState((prev) => (
-      {
-        ...prev,
-        slideIndex: currentSlideIndex,
-        slideShow: images[currentSlideIndex]
-      }
-    ));
+    setState((prev) => ({
+      ...prev,
+      slideIndex: currentSlideIndex,
+      slideShow: images[currentSlideIndex]
+    }));
   };
 
   const moveSlideWithArrows = (type) => {
@@ -57,20 +55,18 @@ const Slideshow = (prop) => {
       }
     }
     setCurrentIndex(index);
-    setState((prev) => (
-      {
-        ...prev,
-        slideIndex: index,
-        slideShow: images[index]
-      }
-    ));
+    setState((prev) => ({
+      ...prev,
+      slideIndex: index,
+      slideShow: images[index]
+    }));
   };
 
   const RenderArrows = () => {
     return (
       <div className="slider-arrows">
-        <div className="slider-arrow slider-arrow--left" onClick={() => moveSlideWithArrows('prev')}/>
-        <div className="slider-arrow slider-arrow--right" onClick={() => moveSlideWithArrows('next')}/>
+        <div className="slider-arrow slider-arrow--left" onClick={() => moveSlideWithArrows('prev')} />
+        <div className="slider-arrow slider-arrow--right" onClick={() => moveSlideWithArrows('next')} />
       </div>
     );
   };
@@ -81,26 +77,14 @@ const Slideshow = (prop) => {
       const btnClasses = i === currentSlide ? 'slider-navButton slider-navButton--active' : 'slider-navButton';
       return <button className={btnClasses} key={i} />;
     });
-    return (
-      <div className="slider-nav">
-        {listIndicators}
-      </div>
-    );
+    return <div className="slider-nav">{listIndicators}</div>;
   };
 
   return (
     <>
       <div className="slider">
-        <div className="slider-slides">
-          {
-            images && images.length && slideShow && (
-              <div className="slider-image"
-              style={{ backgroundImage: `url(${slideShow.url})` }}
-              ></div>
-            )
-          }
-        </div>
-        <Indicators currentSlide={slideIndex}/>
+        <div className="slider-slides">{images && images.length && slideShow && <div className="slider-image" style={{ backgroundImage: `url(${slideShow.url})` }}></div>}</div>
+        <Indicators currentSlide={slideIndex} />
         {showArrows ? <RenderArrows /> : null}
       </div>
     </>
