@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Header.scss';
+import { connect } from 'react-redux';
+import { getMovies, setMovieType, setResponsePageNumber } from '../../redux/actions/movies';
+import PropTypes from 'prop-types';
 
 const HEADER_LIST = [
   {
@@ -28,9 +31,21 @@ const HEADER_LIST = [
   }
 ];
 
-const Header = () => {
+const Header = (props) => {
+  const { getMovies, setMovieType, page, totalPages, setResponsePageNumber } = props;
   let [navClass, setNavClass] = useState(false);
   let [menuClass, setMenuClass] = useState(false);
+  const [type, setType] = useState('now_playing');
+
+  useEffect(() => {
+    getMovies(type, page);
+    setResponsePageNumber(page, totalPages);
+  }, [type]);
+
+  const setMovieTypeUrl = (type) => {
+    setType(type);
+    setMovieType(type);
+  };
 
   const toggleMenu = () => {
     menuClass = !menuClass;
@@ -57,7 +72,7 @@ const Header = () => {
           </div>
           <ul className={`${navClass ? 'header-nav header-mobile-nav' : 'header-nav'}`}>
             {HEADER_LIST.map((data) => (
-              <li key={data.id} className="header-nav-item">
+              <li key={data.id} className={data.type === type ? 'header-nav-item active-item' : 'header-nav-item'} onClick={() => setMovieTypeUrl(data.type)}>
                 <span className="header-list-name">
                   <i className={data.iconClass}></i>
                 </span>
@@ -73,4 +88,18 @@ const Header = () => {
   );
 };
 
-export default Header;
+Header.propTypes = {
+  getMovies: PropTypes.func.isRequired,
+  setMovieType: PropTypes.func,
+  setResponsePageNumber: PropTypes.func,
+  // list: PropTypes.array,
+  page: PropTypes.number,
+  totalPages: PropTypes.number
+};
+
+const mapStateToProps = (state) => ({
+  // list: state.movies.list,
+  page: state.movies.page,
+  totalPages: state.movies.totalPages
+});
+export default connect(mapStateToProps, { getMovies, setMovieType, setResponsePageNumber })(Header);
