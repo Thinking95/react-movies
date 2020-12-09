@@ -7,6 +7,7 @@ import './SearchResult.scss';
 import Rating from '../rating/Rating';
 import { IMAGE_URL } from '../../../services/movies.service';
 import LazyImage from '../../lazy-image/LazyImage';
+import { Link } from 'react-router-dom';
 
 const SearchResult = (props) => {
   const { searchResult, searchQuery } = props;
@@ -15,6 +16,11 @@ const SearchResult = (props) => {
   useEffect(() => {
     setMovieData(searchResult);
   }, [searchResult]);
+
+  const formatMovieTitle = (title) => {
+    const titleStr = title.toLowerCase();
+    return titleStr.replace(/ /g, '-');
+  };
 
   return (
     <div className="searchKeyword">
@@ -27,7 +33,9 @@ const SearchResult = (props) => {
             {data.poster_path && (
               <LazyImage className="grid-cell" src={`${IMAGE_URL}${data.poster_path}`} alt="placeholder">
                 <div className="grid-read-more">
-                  <button className="grid-cell-button">Read More</button>
+                  <button className="grid-cell-button">
+                    <Link to={`/${data.id}/${formatMovieTitle(data.title)}/details`}>Read More</Link>
+                  </button>
                 </div>
                 <div className="grid-detail">
                   <span className="grid-detail-title">{data.title}</span>
