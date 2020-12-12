@@ -3,7 +3,7 @@ import './Header.scss';
 import { connect } from 'react-redux';
 import { getMovies, setMovieType, setResponsePageNumber, searchQuery, searchResult, clearMovieDetails } from '../../redux/actions/movies';
 import PropTypes from 'prop-types';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 const HEADER_LIST = [
   {
@@ -39,13 +39,18 @@ const Header = (props) => {
   const [type, setType] = useState('now_playing');
   const [search, setSearch] = useState('');
   const [disableSearch, setDisableSearch] = useState(false);
+  const [hideHeader, setHideHeader] = useState(false);
 
   const history = useHistory();
   const location = useLocation();
+  const detailsRoute = useRouteMatch('/:id/:name/details');
 
   useEffect(() => {
     getMovies(type, page);
     setResponsePageNumber(page, totalPages);
+    if (detailsRoute || location.pathname === '/') {
+      setHideHeader(true);
+    }
 
     if (location.pathname !== '/' && location.key) {
       setDisableSearch(true);
@@ -91,7 +96,9 @@ const Header = (props) => {
 
   return (
     <>
-      <div className="header-nav-wrapper">
+    {
+      hideHeader && (
+        <div className="header-nav-wrapper">
         <div className="header-bar"></div>
         <div className="header-navbar">
           <div className="header-image" onClick={() => navigateToMainPage()}>
@@ -116,6 +123,8 @@ const Header = (props) => {
           </ul>
         </div>
       </div>
+      )
+    }
     </>
   );
 };

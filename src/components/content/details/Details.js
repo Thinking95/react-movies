@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Spinner from '../../../components/spinner/Spinner';
 
 import Rating from '../rating/Rating';
 import './Details.scss';
@@ -16,7 +17,15 @@ import { IMAGE_URL } from '../../../services/movies.service';
 const Details = (props) => {
   const { movieDetails, movie } = props;
   const [details, setDetails] = useState();
+  const [loading, setLoading] = useState(false);
   const { id } = useParams();
+
+  useEffect(() => {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
 
   useEffect(() => {
     if (movie.length === 0) {
@@ -27,7 +36,9 @@ const Details = (props) => {
 
   return (
     <>
-      {details && (
+      {loading
+      ? <Spinner />
+      : details && (
         <div className="movie-container">
           <div className="movie-bg" style={{ backgroundImage: `url(${IMAGE_URL}${details.backdrop_path})` }}></div>
           <div className="movie-overlay"></div>
