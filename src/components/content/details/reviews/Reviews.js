@@ -12,17 +12,23 @@ const Reviews = (props) => {
   return (
     <>
       <div className="movie-reviews">
-        <div className="div-title">Reviews {reviews.results.length > 0 ? reviews.results.length : ''}</div>
-        {reviews.results.length ? (
+        <div className="div-title">Reviews {reviews.results.length > 0 ? reviews.results.length : ''}
+      </div>
+      {
+        reviews.results.length
+        ? (
           reviews.results.map((data) => (
             <div className="reviews" key={uuidv4()}>
               <h3>{data.author}</h3>
               <div>{data.content}</div>
             </div>
-          ))
-        ) : (
+          )
+          )
+        )
+        : (
           <p>No reviews to show</p>
-        )}
+        )
+        }
       </div>
     </>
   );
