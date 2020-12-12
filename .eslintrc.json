@@ -32,6 +32,7 @@
         "react"
     ],
     "rules": {
+    "no-whitespace-before-property": "off",
     "semi": [2, "always"],
     "indent": "off",
     "no-tabs": 0,
