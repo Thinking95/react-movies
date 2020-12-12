@@ -15,6 +15,11 @@ const Slideshow = (prop) => {
   let currentSlideIndex = 0;
 
   useEffect(() => {
+    setState({
+      ...state,
+      slideIndex: 0,
+      slideShow: images[0]
+    });
     if (auto) {
       const timeInterval = setInterval(() => {
         autoMoveSlide();
@@ -25,7 +30,7 @@ const Slideshow = (prop) => {
         clearInterval(sliderInterval);
       };
     }
-  }, []);
+  }, [images]);
 
   const autoMoveSlide = () => {
     let lastIndex = 0;
@@ -91,7 +96,7 @@ const Slideshow = (prop) => {
   );
 };
 
-Slideshow.PropTypes = {
+Slideshow.propTypes = {
   images: PropTypes.array.isRequired,
   auto: PropTypes.bool.isRequired,
   showArrows: PropTypes.bool.isRequired,

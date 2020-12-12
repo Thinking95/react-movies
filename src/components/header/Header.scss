@@ -26,6 +26,7 @@
 }
 
 .header-image {
+  cursor: pointer;
   font-family: 'Great Vibes', cursive;
   font-size: 29px;
   grid-area: link;
@@ -41,6 +42,7 @@
   margin-right: 25px;
 
   .header-nav-item {
+    cursor: pointer;
     .header-list-icon {
       padding-right: 5px;
     }
