@@ -1,4 +1,12 @@
 version: 2.1
+<<<<<<< HEAD
+orbs:
+  node: circleci/node@3.0.0
+workflows:
+  node-tests:
+    jobs:
+      - node/test
+=======
 
 jobs:
   build:
@@ -172,3 +180,4 @@ workflows:
                 - develop
                 - staging
                 - master
+>>>>>>> origin/staging
