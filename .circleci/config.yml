@@ -1,12 +1,4 @@
 version: 2.1
-<<<<<<< HEAD
-orbs:
-  node: circleci/node@3.0.0
-workflows:
-  node-tests:
-    jobs:
-      - node/test
-=======
 
 jobs:
   build:
@@ -47,6 +39,23 @@ jobs:
           name: Run linting
           command: npm i -D eslint eslint-config-standard eslint-plugin-import eslint-plugin-node eslint-plugin-promise eslint-plugin-standard
                    npm run lint
+
+  unit-test:
+    docker:
+      - image: circleci/node:15.3.0
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Show current branch
+          command: echo ${CHECK_BRANCH}
+      - restore_cache:
+          keys:
+            - app-{{ checksum "package.json "}}
+            - app-
+      - run:
+          name: Run unit unit
+          command: npm run test
 
   deploy-to-aws-s3:
     docker:
@@ -136,9 +145,18 @@ workflows:
                 - develop
                 - staging
                 - master
-      - deploy-to-aws-s3:
+      - unit-test:
           requires:
             - linting
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - master
+      - deploy-to-aws-s3:
+          requires:
+            - unit-test
           filters:
             branches:
               only:
@@ -154,4 +172,3 @@ workflows:
                 - develop
                 - staging
                 - master
->>>>>>> origin/staging
